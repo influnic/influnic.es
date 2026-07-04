@@ -231,28 +231,14 @@
           </ul>
         </div>
         <div>
-          <form id="contactForm" class="p-6 border rounded-2xl shadow-sm bg-white">
-            <input type="text" name="name" data-i18n-placeholder="form.name" placeholder="Nombre" required class="w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2 ring-yellow" />
-            <input type="email" name="email" placeholder="Email" required class="w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2 ring-yellow" />
-            <input type="text" name="company" style="display:none" autocomplete="off" />
-            <textarea name="message" data-i18n-placeholder="form.message" placeholder="Cuéntanos tu necesidad" required rows="4" class="w-full mb-4 p-3 border rounded focus:outline-none focus:ring-2 ring-purple"></textarea>
-
-            <label>
-              <span data-i18n="form.captchaLabel">Cuánto es 3 + 4?</span>
-              <input type="text" name="captcha" class="w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2 ring-yellow" required />
-            </label>
-
-            <label class="flex items-start gap-2 text-sm text-gray-600 mb-4">
-              <input type="checkbox" required class="mt-1" />
-              <span><span data-i18n="form.gdpr">Acepto el tratamiento de mis datos para ser contactado.</span> <a href="#" class="underline" target="_blank" rel="noopener" data-i18n="form.privacy">Política de privacidad</a>.</span>
-            </label>
-
-            <button type="submit" class="w-full px-4 py-3 font-semibold rounded-md border border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 ring-purple" data-i18n="form.submit">
-              Enviar
-            </button>
-            <p id="contactStatus" style="margin-top:0.5rem;"></p>
+          <div class="p-6 border rounded-2xl shadow-sm bg-white">
+            <p class="text-sm text-gray-600 mb-5" data-i18n="form.redirectText">Abre nuestro formulario de contacto seguro para enviarnos tu consulta.</p>
+            <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=zMEtl7-WhU29dI_U47rVp_aP-PJ7cFBPoAnVTx0p3y9UOUFGRUtQWjlXN0lHU0RUS0I2T0VWSDJWSS4u" target="_blank" rel="noopener" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 font-semibold rounded-md border border-gray-300 hover:border-gray-400 focus:outline-none focus:ring-2 ring-purple">
+              <span data-i18n="form.openButton">Abrir formulario de contacto</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 3h7m0 0v7m0-7L10 14m-4 7h10a2 2 0 002-2v-5M5 5h5" /></svg>
+            </a>
             <p class="mt-3 text-xs text-gray-500"><span data-i18n="form.emailPrefix">También puedes escribir a</span> <a class="underline" href="mailto:info@influnic.com">info@influnic.com</a>.</p>
-          </form>
+          </div>
         </div>
       </div>
     </div>
@@ -314,7 +300,7 @@
         "contact.title":"Hablemos",
         "contact.body":"Cuéntanos brevemente tu contexto y objetivo. Te responderemos en 24–48h con una propuesta de siguiente paso.",
         "contact.point1":"Proyecto puntual o acompañamiento continuo","contact.point2":"Sesión de discovery sin compromiso","contact.point3":"Referencias disponibles bajo demanda (requiere NDA)",
-        "form.name":"Nombre","form.message":"Cuéntanos tu necesidad","form.captchaLabel":"Cuánto es 3 + 4?","form.gdpr":"Acepto el tratamiento de mis datos para ser contactado.","form.privacy":"Política de privacidad","form.submit":"Enviar","form.emailPrefix":"También puedes escribir a",
+        "form.redirectText":"Abre nuestro formulario de contacto seguro para enviarnos tu consulta.","form.openButton":"Abrir formulario de contacto","form.name":"Nombre","form.message":"Cuéntanos tu necesidad","form.captchaLabel":"Cuánto es 3 + 4?","form.gdpr":"Acepto el tratamiento de mis datos para ser contactado.","form.privacy":"Política de privacidad","form.submit":"Enviar","form.emailPrefix":"También puedes escribir a",
         "footer.rights":"Todos los derechos reservados.","footer.legal":"Aviso legal","footer.privacy":"Privacidad",
         "status.wait":"Por favor, dedica un momento a completar el formulario antes de enviarlo 😊",
         "status.captcha":"Responde correctamente a la pregunta anti-spam.",
@@ -354,7 +340,7 @@
         "contact.title":"Let's talk",
         "contact.body":"Tell us briefly about your context and objective. We will respond within 24–48h with a proposal for the next step.",
         "contact.point1":"One-off project or continuous support","contact.point2":"No-obligation discovery session","contact.point3":"References available on demand (NDA required)",
-        "form.name":"Name","form.message":"Tell us what you need","form.captchaLabel":"What is 3 + 4?","form.gdpr":"I accept the processing of my data to be contacted.","form.privacy":"Privacy policy","form.submit":"Send","form.emailPrefix":"You can also write to",
+        "form.redirectText":"Open our secure contact form to send us your enquiry.","form.openButton":"Open contact form","form.name":"Name","form.message":"Tell us what you need","form.captchaLabel":"What is 3 + 4?","form.gdpr":"I accept the processing of my data to be contacted.","form.privacy":"Privacy policy","form.submit":"Send","form.emailPrefix":"You can also write to",
         "footer.rights":"All rights reserved.","footer.legal":"Legal notice","footer.privacy":"Privacy",
         "status.wait":"Please take a moment to fill the form properly before sending 😊",
         "status.captcha":"Please answer the anti-spam question correctly.",
@@ -406,171 +392,6 @@
     applyLanguage(currentLang);
   </script>
 
-  <script type="application/javascript">
-    (function() {
-      const form = document.getElementById('contactForm');
-      const statusEl = document.getElementById('contactStatus');
-      const submitBtn = form.querySelector('button[type="submit"]');
-      const FUNCTION_URL = 'https://faas-fra1-afec6ce7.doserverless.co/api/v1/web/fn-bb200f31-dfa9-4873-8c09-c3d3c7163d05/default/web-contact';
-
-      const MIN_MESSAGE_LEN = 20;
-      const MIN_TIME_ON_PAGE_MS = 4000;
-      const MAX_SUBMISSIONS_PER_HOUR = 3;
-
-      const pageLoadTime = Date.now();
-
-      function setStatus(msg, isError = false) {
-        statusEl.textContent = msg;
-        statusEl.style.color = isError ? 'red' : 'green';
-      }
-
-      function getRateLimitState() {
-        try {
-          const raw = localStorage.getItem('contactFormStats');
-          if (!raw) return null;
-          return JSON.parse(raw);
-        } catch (e) {
-          return null;
-        }
-      }
-
-      function updateRateLimitState() {
-        const now = Date.now();
-        const hourMs = 60 * 60 * 1000;
-        let state = getRateLimitState();
-
-        if (!state || !state.start || now - state.start >= hourMs) {
-          state = { start: now, count: 1 };
-        } else {
-          state.count += 1;
-        }
-
-        localStorage.setItem('contactFormStats', JSON.stringify(state));
-        return state;
-      }
-
-      function checkRateLimit() {
-        const now = Date.now();
-        const hourMs = 60 * 60 * 1000;
-        const state = getRateLimitState();
-
-        if (!state) return { allowed: true, remaining: MAX_SUBMISSIONS_PER_HOUR };
-
-        const elapsed = now - state.start;
-        if (elapsed >= hourMs) {
-          return { allowed: true, remaining: MAX_SUBMISSIONS_PER_HOUR };
-        }
-
-        if (state.count >= MAX_SUBMISSIONS_PER_HOUR) {
-          return { allowed: false, remaining: 0 };
-        }
-
-        return { allowed: true, remaining: MAX_SUBMISSIONS_PER_HOUR - state.count };
-      }
-
-      function generateClientToken() {
-        const ts = Date.now();
-        const rand = (
-          Math.random().toString(36).slice(2) +
-          Math.random().toString(36).slice(2)
-        ).slice(0, 32);
-
-        const rawUA = navigator.userAgent || '';
-        const uaClean = rawUA.replace(/[^\x20-\x7E]/g, '').slice(0, 80);
-
-        const payload = {
-          v: 1,
-          ts,
-          rand,
-          ua: uaClean
-        };
-
-        const json = JSON.stringify(payload);
-        return btoa(json);
-      }
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        setStatus('');
-
-        const now = Date.now();
-
-        if (!form.reportValidity()) {
-          return;
-        }
-
-        if (now - pageLoadTime < MIN_TIME_ON_PAGE_MS) {
-          setStatus(t('status.wait'), true);
-          return;
-        }
-
-        const name = form.name.value.trim();
-        const email = form.email.value.trim();
-        const message = form.message.value.trim();
-        const company = form.company.value.trim();
-        const captcha = form.captcha.value.trim();
-
-        if (captcha !== '7') {
-          setStatus(t('status.captcha'), true);
-          return;
-        }
-
-        if (message.length < MIN_MESSAGE_LEN) {
-          setStatus(t('status.detail'), true);
-          return;
-        }
-
-        const onlyOneChar = /^(\S)\1{9,}$/;
-        const onlyNumbers = /^\d+$/;
-        if (onlyOneChar.test(message) || onlyNumbers.test(message)) {
-          setStatus(t('status.suspicious'), true);
-          return;
-        }
-
-        const rate = checkRateLimit();
-        if (!rate.allowed) {
-          setStatus(t('status.rate'), true);
-          return;
-        }
-
-        const clientToken = generateClientToken();
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = t('status.sending');
-
-        const payload = {
-          name,
-          email,
-          message,
-          company,
-          captcha,
-          clientToken,
-          lang: currentLang
-        };
-
-        try {
-          const res = await fetch(FUNCTION_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          if (res.ok) {
-            updateRateLimitState();
-            setStatus(t('status.sent'), false);
-            form.reset();
-          } else {
-            setStatus(t('status.error'), true);
-          }
-        } catch (err) {
-          console.error(err);
-          setStatus(t('status.network'), true);
-        } finally {
-          submitBtn.disabled = false;
-          submitBtn.textContent = t('form.submit');
-        }
-      });
-    })();
-  </script>
+  
 </body>
 </html>
