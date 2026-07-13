@@ -155,14 +155,27 @@
       <h2 class="text-2xl md:text-3xl font-bold" data-i18n="services.title">Servicios</h2>
       <div class="underline-accent mt-2 w-16"></div>
       <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <div class="md:col-span-3 md:grid md:grid-cols-3 md:items-center gap-4 p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="md:col-span-2">
-            <div class="text-sm font-semibold text-gray-700" data-i18n="services.webOffer.title">Página Web a medida</div>
-            <p class="mt-2 text-sm text-gray-600" data-i18n="services.webOffer.body">Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto</p>
-          </div>
-          <div class="mt-4 md:mt-0 md:text-right">
-            <span class="inline-block text-xs px-2 py-1 rounded-full ring-1 ring-purple">59.99€ <small style="font-size: 40%">+ IVA</small></span>
-            <a href="https://buy.stripe.com/bJebJ0ca21cXfkZ6eLg3605" target="_blank" rel="noopener"><span class="inline-block ml-0 md:ml-2 mt-3 md:mt-0 text-xs px-2 py-1 rounded-full ring-1 ring-yellow hover:bg-black hover:ring-yellow-500 hover:text-white hover:font-bold" data-i18n="services.webOffer.cta">La quiero!</span></a>
+        <div class="md:col-span-3 p-6 md:p-8 border rounded-2xl hover:shadow-md transition hero-card">
+          <div class="grid lg:grid-cols-[1fr_auto] gap-6 lg:items-start">
+            <div>
+              <div class="text-lg font-bold text-gray-800" data-i18n="services.webOffer.title">Página Web a medida</div>
+              <p class="mt-2 text-sm text-gray-600 max-w-3xl" data-i18n="services.webOffer.body">Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto.</p>
+              <div class="mt-5 text-sm font-semibold text-gray-700" data-i18n="services.webOffer.includes">El servicio incluye:</div>
+              <ul class="mt-3 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-600">
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature1">Hasta 5 secciones</span></li>
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature2">Esquema de colores personalizable: 1 fondo y 3 colores de acento</span></li>
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature3">1 logo en la cabecera y otro en el pie de página</span></li>
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature4">1 servicio destacado, opcionalmente con botón a un enlace externo</span></li>
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature5">Hasta 6 servicios con título, descripción y hasta 4 píldoras destacadas</span></li>
+                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature6">1 enlace personalizado por sección</span></li>
+                <li class="flex gap-2 sm:col-span-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature7">Hasta 5 idiomas. Las traducciones deben proporcionarse; el servicio de traducción se cobra por separado.</span></li>
+              </ul>
+            </div>
+            <div class="lg:min-w-[240px] lg:text-right border-t lg:border-t-0 lg:border-l border-gray-200 pt-5 lg:pt-0 lg:pl-6">
+              <div class="text-3xl font-extrabold text-gray-900" data-i18n="services.webOffer.monthly">0 € / mes</div>
+              <div class="mt-1 text-sm text-gray-600" data-i18n="services.webOffer.oneTime">Pago único de 59,99 € + IVA</div>
+              <a href="https://buy.stripe.com/bJebJ0ca21cXfkZ6eLg3605" target="_blank" rel="noopener" class="inline-flex justify-center mt-5 px-5 py-3 rounded-lg font-semibold text-sm bg-gray-900 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 ring-yellow" data-i18n="services.webOffer.cta">Contratar mi página web</a>
+            </div>
           </div>
         </div>
         <div class="p-6 border rounded-xl hover:shadow-sm transition">
@@ -282,8 +295,18 @@
         "about.body":"Somos una consultora adaptativa. Integramos procesos y tecnología para resolver problemas reales: desde la gestión de servicios empresariales (ITSM) hasta experiencias de cliente y automatización con IA. Nuestro enfoque es práctico, medible y orientado a resultados.",
         "services.title":"Servicios",
         "services.webOffer.title":"Página Web a medida",
-        "services.webOffer.body":"Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto",
-        "services.webOffer.cta":"La quiero!",
+        "services.webOffer.body":"Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto.",
+        "services.webOffer.includes":"El servicio incluye:",
+        "services.webOffer.feature1":"Hasta 5 secciones",
+        "services.webOffer.feature2":"Esquema de colores personalizable: 1 fondo y 3 colores de acento",
+        "services.webOffer.feature3":"1 logo en la cabecera y otro en el pie de página",
+        "services.webOffer.feature4":"1 servicio destacado, opcionalmente con botón a un enlace externo",
+        "services.webOffer.feature5":"Hasta 6 servicios con título, descripción y hasta 4 píldoras destacadas",
+        "services.webOffer.feature6":"1 enlace personalizado por sección",
+        "services.webOffer.feature7":"Hasta 5 idiomas. Las traducciones deben proporcionarse; el servicio de traducción se cobra por separado.",
+        "services.webOffer.monthly":"0 € / mes",
+        "services.webOffer.oneTime":"Pago único de 59,99 € + IVA",
+        "services.webOffer.cta":"Contratar mi página web",
         "services.consulting.title":"Consultoría",
         "services.consulting.body":"Implementación, upgrades y mejora continua",
         "services.outsourcing.title":"Outsourcing",
@@ -322,8 +345,18 @@
         "about.body":"We are an adaptive consultancy. We integrate processes and technology to solve real problems: from enterprise service management (ITSM) to customer experiences and AI automation. Our approach is practical, measurable and results-oriented.",
         "services.title":"Services",
         "services.webOffer.title":"Custom website",
-        "services.webOffer.body":"A personalized design with the information, style and images of your business or project",
-        "services.webOffer.cta":"I want it!",
+        "services.webOffer.body":"A custom design built around the information, visual style and images of your business or project.",
+        "services.webOffer.includes":"The service includes:",
+        "services.webOffer.feature1":"Up to 5 sections",
+        "services.webOffer.feature2":"Customizable colour scheme: 1 background and 3 accent colours",
+        "services.webOffer.feature3":"1 logo in the header and another in the footer",
+        "services.webOffer.feature4":"1 featured service, optionally with a button linking to an external page",
+        "services.webOffer.feature5":"Up to 6 services, each with a title, description and up to 4 highlight tags",
+        "services.webOffer.feature6":"1 custom link per section",
+        "services.webOffer.feature7":"Up to 5 languages. Translations must be supplied; translation services are charged separately.",
+        "services.webOffer.monthly":"€0 / month",
+        "services.webOffer.oneTime":"One-time payment of €59.99 + VAT",
+        "services.webOffer.cta":"Order my website",
         "services.consulting.title":"Consulting",
         "services.consulting.body":"Implementation, upgrades and continuous improvement",
         "services.outsourcing.title":"Outsourcing",
