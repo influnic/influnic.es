@@ -5,7 +5,7 @@ Serve this repository as static files. No build step or backend is required.
 
 ## Features
 
-- Task and milestone editor: inclusive start/end dates, owner, phase/group,
+- Task and milestone editor: inclusive start/end dates, owner, effort (shown as Esfuerzo),
   progress, color, notes and finish-to-start dependencies.
 - Drag to move tasks; resize either end; keyboard-accessible editing through
   task names or focused bars (Enter/Space). Reorder tasks with the row arrows.
@@ -13,6 +13,15 @@ Serve this repository as static files. No build step or backend is required.
 - Dependencies are visual: overlapping dates are flagged, without automatic
   rescheduling. Durations use calendar days, including weekends.
 - Undo/redo (up to 60 changes), sample project, printing via browser/PDF.
+- PNG export of the full Gantt, including off-screen rows/dates, title,
+  task details, dependencies, progress, milestones and weekend shading.
+  Uses the current scale/zoom; large plans are downscaled to 16,000 pixels
+  per dimension and 32 megapixels. Rendering runs locally with Canvas.
+- JSON, CSV and PNG downloads use the project name (for example,
+  `Plan de implantación.png`). Invalid filename characters are replaced with
+  underscores; blank names fall back to `Mi proyecto`.
+- The effort field retains the `group` JSON/CSV key for compatibility with
+  existing files and local saves.
 - Explicit save/recover in localStorage under `influnic-gantt-builder-state`.
   It does not share the OrgChart storage key. Reload shows a recovery prompt
   in the status area; it does not automatically open a saved plan.
@@ -81,3 +90,21 @@ node tests/gantt-dom.test.cjs
 The DOM suite simulates pointer handlers; it does not verify real browser
 geometry or appearance. Task IDs must not contain `|`, line breaks or leading/
 trailing whitespace, so dependency lists can round-trip through CSV.
+
+PNG and filename checks with a real Canvas encoder:
+
+```sh
+npm install --no-save jsdom @napi-rs/canvas
+node tests/gantt-export.test.cjs
+```
+
+This suite checks download names, the Esfuerzo label, PNG encoding and size
+limits, empty plans, unchanged project state and encoding error handling.
+It writes `/tmp/gantt-export-preview.png` for visual review.
+
+
+Displayed dates use `MM/DD/YYYY` in the editor and PNG. The second task line
+includes start/end dates; milestones show only their start date. JSON/CSV and
+native date input values retain ISO `YYYY-MM-DD` for compatibility. PNG output
+contains no Influnic branding.
+
