@@ -4,7 +4,7 @@ const { JSDOM } = require('jsdom');
 const { createCanvas } = require('@napi-rs/canvas');
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const downloads = [], buffers = [], errors = [];
+const downloads = [], buffers = [], errors = [], drawnText = [];
 const dom = new JSDOM(fs.readFileSync('gantt.html', 'utf8'), {
   url: 'https://example.test/gantt.html', runScripts: 'dangerously',
   beforeParse(w) {
@@ -15,7 +15,7 @@ const dom = new JSDOM(fs.readFileSync('gantt.html', 'utf8'), {
     w.HTMLAnchorElement.prototype.click = function () { downloads.push(this.download); };
     w.HTMLCanvasElement.prototype.getContext = function () {
       this.nativeCanvas = createCanvas(this.width, this.height);
-      return this.nativeCanvas.getContext('2d');
+      const ctx=this.nativeCanvas.getContext('2d');const fill=ctx.fillText.bind(ctx);ctx.fillText=(value,...args)=>{drawnText.push(String(value));return fill(value,...args);};return ctx;
     };
     w.HTMLCanvasElement.prototype.toBlob = function (cb) {
       const png = this.nativeCanvas.toBuffer('image/png');
@@ -36,6 +36,13 @@ const w = dom.window, $ = id => w.document.getElementById(id);
     $('exportJson').click(); $('exportCsv').click(); await $('exportPng').onclick();
     assert.deepEqual(downloads, ['Plan de implantación.json', 'Plan de implantación.csv', 'Plan de implantación.png']);
     assert.equal(w.eval('snapshot()'), before);
+    assert.ok(drawnText.every(t=>!t.includes('INFLUNIC')));
+    const dates=w.eval('taskDates(state.tasks[0])');
+    assert.match(dates,/^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/);
+    assert.equal(w.document.querySelector('[data-edit="discovery"] .task-dates').textContent,dates);
+    assert.ok(drawnText.includes(dates));
+    assert.match(w.eval('taskDates(state.tasks.at(-1))'),/^\d{2}\/\d{2}\/\d{4}$/);
+    assert.match($('dateRange').textContent,/^\d{2}\/\d{2}\/\d{4}/);
     assert.equal(buffers[0].subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
     assert.ok(buffers[0].readUInt32BE(16) > 700);
     assert.ok(buffers[0].readUInt32BE(20) > 6 * 62);

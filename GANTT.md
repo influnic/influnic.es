@@ -102,3 +102,9 @@ This suite checks download names, the Esfuerzo label, PNG encoding and size
 limits, empty plans, unchanged project state and encoding error handling.
 It writes `/tmp/gantt-export-preview.png` for visual review.
 
+
+Displayed dates use `MM/DD/YYYY` in the editor and PNG. The second task line
+includes start/end dates; milestones show only their start date. JSON/CSV and
+native date input values retain ISO `YYYY-MM-DD` for compatibility. PNG output
+contains no Influnic branding.
+
