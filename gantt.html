@@ -19,7 +19,7 @@
 <div class="links"><a href="orgchart.html">↗ OrgChart Builder</a><a href="index.html">Volver a Influnic</a></div>
 </aside>
 <main class="main">
-<div class="toolbar"><button class="btn primary" id="sample">Cargar ejemplo</button><button class="btn" id="newProject">Nuevo proyecto</button><span class="spacer"></span><button class="btn" id="undo" title="Deshacer (Ctrl+Z)" disabled>↶ Deshacer</button><button class="btn" id="redo" title="Rehacer (Ctrl+Mayús+Z)" disabled>↷ Rehacer</button><button class="btn" id="print">Imprimir / PDF</button></div>
+<div class="toolbar"><button class="btn primary" id="sample">Cargar ejemplo</button><button class="btn" id="newProject">Nuevo proyecto</button><span class="spacer"></span><button class="btn" id="undo" title="Deshacer (Ctrl+Z)" disabled>↶ Deshacer</button><button class="btn" id="redo" title="Rehacer (Ctrl+Mayús+Z)" disabled>↷ Rehacer</button><button class="btn" id="exportPng">Exportar PNG</button><button class="btn" id="print">Imprimir / PDF</button></div>
 <div class="heading"><div><p class="eyebrow">INFLUNIC · VISUAL PLANNING</p><h2 id="projectTitle">Mi proyecto</h2><p id="dateRange">Empieza añadiendo una tarea o cargando el ejemplo.</p></div><div class="stats"><div class="stat"><strong id="taskCount">0</strong><span>Tareas</span></div><div class="stat"><strong id="progressStat">0%</strong><span>Progreso medio</span></div><div class="stat"><strong id="daysStat">0</strong><span>Días de plan</span></div></div></div>
 <div class="controls"><label for="scale">Escala</label><select id="scale"><option value="day">Días</option><option value="week" selected>Semanas</option><option value="month">Meses</option></select><button class="btn" id="zoomOut" aria-label="Alejar">−</button><button class="btn" id="zoomIn" aria-label="Acercar">＋</button><button class="btn" id="fit">Ajustar</button><button class="btn" id="today">Hoy</button><span class="legend">◆ Hito &nbsp; · &nbsp; Línea rosa: hoy &nbsp; · &nbsp; Sombreado: fin de semana</span></div>
 <div id="warning" class="hidden"></div>
@@ -27,7 +27,7 @@
 <div class="footer"><span id="status" role="status" aria-live="polite">Listo. Crea tu primer plan.</span><span>Privado · Los datos se gestionan en tu navegador</span></div>
 </main></div>
 <input type="file" id="file" class="hidden" accept=".json,.csv,application/json,text/csv">
-<dialog id="editor" aria-labelledby="editorTitle"><form id="taskForm"><p class="eyebrow">Detalles de planificación</p><h2 id="editorTitle">Nueva tarea</h2><label for="taskName">Nombre *</label><input id="taskName" required maxlength="160"><div class="two"><div><label for="start">Inicio *</label><input id="start" type="date" min="1900-01-01" max="2199-12-31" required></div><div><label for="end">Fin *</label><input id="end" type="date" min="1900-01-01" max="2199-12-31" required></div></div><label class="check"><input id="milestone" type="checkbox"> Es un hito (un único día)</label><div class="two"><div><label for="owner">Responsable</label><input id="owner" maxlength="160"></div><div><label for="group">Fase / grupo</label><input id="group" maxlength="160"></div><div><label for="progress">Progreso (%)</label><input id="progress" type="number" min="0" max="100" value="0" required></div><div><label for="color">Color</label><input id="color" type="color" value="#7c3aed"></div></div><label for="dependencies">Depende de (Ctrl / ⌘ para varias)</label><select id="dependencies" multiple size="4"></select><label for="notes">Notas</label><textarea id="notes" maxlength="4000"></textarea><p id="formError" class="error" role="alert"></p><div class="actions"><button class="btn danger" type="button" id="deleteTask">Eliminar</button><button class="btn" type="button" id="cancel">Cancelar</button><button class="btn primary" type="submit">Guardar tarea</button></div></form></dialog>
+<dialog id="editor" aria-labelledby="editorTitle"><form id="taskForm"><p class="eyebrow">Detalles de planificación</p><h2 id="editorTitle">Nueva tarea</h2><label for="taskName">Nombre *</label><input id="taskName" required maxlength="160"><div class="two"><div><label for="start">Inicio *</label><input id="start" type="date" min="1900-01-01" max="2199-12-31" required></div><div><label for="end">Fin *</label><input id="end" type="date" min="1900-01-01" max="2199-12-31" required></div></div><label class="check"><input id="milestone" type="checkbox"> Es un hito (un único día)</label><div class="two"><div><label for="owner">Responsable</label><input id="owner" maxlength="160"></div><div><label for="group">Esfuerzo</label><input id="group" maxlength="160"></div><div><label for="progress">Progreso (%)</label><input id="progress" type="number" min="0" max="100" value="0" required></div><div><label for="color">Color</label><input id="color" type="color" value="#7c3aed"></div></div><label for="dependencies">Depende de (Ctrl / ⌘ para varias)</label><select id="dependencies" multiple size="4"></select><label for="notes">Notas</label><textarea id="notes" maxlength="4000"></textarea><p id="formError" class="error" role="alert"></p><div class="actions"><button class="btn danger" type="button" id="deleteTask">Eliminar</button><button class="btn" type="button" id="cancel">Cancelar</button><button class="btn primary" type="submit">Guardar tarea</button></div></form></dialog>
 <script>
 'use strict';
 const $=id=>document.getElementById(id), DAY=86400000, KEY='influnic-gantt-builder-state';
@@ -85,7 +85,68 @@ function replaceConfirmed(){return !dirty()||confirm('Se sustituirá el plan act
 $('loadLocal').onclick=()=>{try{const raw=localStorage.getItem(KEY);if(!raw)return tell('No hay ningún Gantt guardado en este navegador.');const checked=normalize(JSON.parse(raw));if(!replaceConfirmed())return;setState(checked,'Plan recuperado del navegador.');savedSnapshot=snapshot();}catch(err){tell('No se pudo recuperar el guardado: '+err.message);}};
 $('newProject').onclick=()=>{if(replaceConfirmed())setState({version:1,project:'Mi proyecto',tasks:[]},'Nuevo proyecto listo.');};
 $('sample').onclick=()=>{if(!replaceConfirmed())return;const base=add(today(),-3),make=(id,name,a,b,progress,owner,group,color,dependencies=[],milestone=false)=>({id,name,start:add(base,a),end:add(base,b),progress,owner,group,color,dependencies,milestone,notes:''});setState({version:1,project:'Lanzamiento de un nuevo servicio',scale:'week',tasks:[make('discovery','Definir alcance',0,4,100,'Ana','01 · Descubrimiento','#7c3aed'),make('design','Diseñar la solución',5,11,65,'Kevin','02 · Diseño','#7c3aed',['discovery']),make('build','Desarrollo e integración',12,25,20,'Equipo técnico','03 · Construcción','#0891b2',['design']),make('content','Preparar documentación',12,21,40,'Lucía','03 · Construcción','#0891b2',['design']),make('test','Pruebas de aceptación',26,32,0,'Equipo QA','04 · Validación','#d97706',['build','content']),make('launch','Puesta en producción',33,33,0,'Kevin','05 · Lanzamiento','#db2777',['test'],true)]},'Ejemplo cargado. Puedes editarlo o exportarlo como plantilla.');};
-function download(text,type,ext){const blob=new Blob([text],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='influnic-gantt.'+ext;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);tell('Archivo '+ext.toUpperCase()+' exportado.');}
+function exportFilename(ext){
+ let name=String(state.project||'').normalize('NFC').replace(/[<>:"/\\|?*\u0000-\u001f\u007f]/g,'_').trim().replace(/[. ]+$/g,'');
+ if(!name)name='Mi proyecto';
+ if(/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(name))name='_'+name;
+ return name.slice(0,160).replace(/[. ]+$/g,'')+'.'+ext;
+}
+function saveBlob(blob,filename){
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function download(text,type,ext){saveBlob(new Blob([text],{type}),exportFilename(ext));tell('Archivo '+ext.toUpperCase()+' exportado.');}
+// Draw the full plan locally, including rows outside the scroll viewport.
+function createGanttCanvas(){
+ const {origin,px,width}=layout,tasks=state.tasks,meta=300,pad=24,heading=94,axis=62,row=62;
+ const rawWidth=Math.max(700,width+meta+pad*2),rawHeight=heading+axis+Math.max(1,tasks.length)*row+pad+24;
+ const ratio=Math.min(2,16000/rawWidth,16000/rawHeight,Math.sqrt(32000000/(rawWidth*rawHeight)));
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.floor(rawWidth*ratio));canvas.height=Math.max(1,Math.floor(rawHeight*ratio));
+ const c=canvas.getContext('2d');if(!c)throw Error('Tu navegador no permite generar imágenes.');c.scale(ratio,ratio);c.fillStyle='#fff';c.fillRect(0,0,rawWidth,rawHeight);
+ function text(value,x,y,max,font='12px sans-serif',color='#0f172a'){c.save();c.beginPath();c.rect(x,y-22,Math.max(0,max),30);c.clip();c.font=font;c.fillStyle=color;let label=String(value);if(c.measureText(label).width>max){while(label&&c.measureText(label+'…').width>max)label=label.slice(0,-1);label=label?label+'…':'';}c.fillText(label,x,y);c.restore();}
+ function line(x1,y1,x2,y2,color='#e2e8f0'){c.beginPath();c.strokeStyle=color;c.lineWidth=1;c.moveTo(x1,y1);c.lineTo(x2,y2);c.stroke();}
+ text(state.project||'Mi proyecto',pad,34,rawWidth-pad*2,'bold 22px sans-serif');
+ text($('dateRange').textContent,pad,57,rawWidth-pad*2,'12px sans-serif','#64748b');
+ text('INFLUNIC · GANTT  |  '+tasks.length+' tareas  |  Esfuerzo · Responsable · Progreso',pad,77,rawWidth-pad*2,'11px sans-serif','#64748b');
+ const x0=pad+meta,y0=heading+axis,bottom=y0+Math.max(1,tasks.length)*row;
+ c.fillStyle='#f8fafc';c.fillRect(pad,heading,rawWidth-pad*2,bottom-heading);
+ c.fillStyle='#f1f5f9';c.fillRect(pad,heading,rawWidth-pad*2,axis);
+ const days=Math.ceil(width/px),step=state.scale==='day'?1:state.scale==='week'?7:30;
+ for(let d=0;d<days;d++){
+  const x=x0+d*px;if(x>rawWidth-pad)break;const dt=new Date((origin+d)*DAY);
+  if([0,6].includes(dt.getUTCDay())){c.fillStyle='#eef1f5';c.fillRect(x,y0,Math.min(px,rawWidth-pad-x),bottom-y0);}
+  if(d===0||dt.getUTCDate()===1){const nextMonth=Date.UTC(dt.getUTCFullYear(),dt.getUTCMonth()+1,1)/DAY;const labelWidth=Math.min((nextMonth-origin-d)*px,rawWidth-pad-x);text(dt.toLocaleDateString('es-ES',{month:'long',year:'numeric',timeZone:'UTC'}),x+6,heading+20,labelWidth-8,'bold 10px sans-serif','#475569');}
+  if(d%step===0){line(x,heading+28,x,bottom);text(state.scale==='day'?dt.getUTCDate():dt.toLocaleDateString('es-ES',{day:'numeric',month:'short',timeZone:'UTC'}),x+5,heading+49,step*px-7,'10px sans-serif','#64748b');}
+ }
+ c.fillStyle='#fff';c.fillRect(pad,y0,meta,bottom-y0);text('TAREA / RESPONSABLE',pad+14,heading+36,meta-28,'bold 11px sans-serif','#475569');
+ for(const [i,t] of tasks.entries()){
+  const y=y0+i*row;line(pad,y+row,rawWidth-pad,y+row);
+  c.fillStyle=t.color;c.beginPath();c.arc(pad+18,y+26,4,0,Math.PI*2);c.fill();
+  text(t.name,pad+32,y+26,meta-44,'bold 12px sans-serif');
+  text([t.group,t.owner,t.progress+'%'].filter(Boolean).join(' · '),pad+32,y+44,meta-44,'10px sans-serif','#64748b');
+ }
+ const indices=new Map(tasks.map((t,i)=>[t.id,i]));
+ c.save();c.beginPath();c.rect(x0,y0,width,bottom-y0);c.clip();
+ const tx=x0+(date(today())-origin)*px;if(tx>=x0&&tx<=x0+width)line(tx,y0,tx,bottom,'#f43f5e');
+ for(const [i,t] of tasks.entries())for(const id of t.dependencies){
+  const j=indices.get(id),p=tasks[j];if(!p)continue;
+  const x1=x0+(date(p.end)-origin+(p.milestone?0:1))*px,x2=x0+(date(t.start)-origin)*px,y1=y0+j*row+31,y2=y0+i*row+31,bend=Math.max(x1+12,x2-12);
+  c.strokeStyle=date(t.start)<=date(p.end)?'#f43f5e':'#64748b';c.lineWidth=1.5;c.beginPath();c.moveTo(x1,y1);c.lineTo(bend,y1);c.lineTo(bend,y2);c.lineTo(x2,y2);c.stroke();
+  const direction=x2>=bend?1:-1;c.fillStyle=c.strokeStyle;c.beginPath();c.moveTo(x2,y2);c.lineTo(x2-direction*6,y2-3);c.lineTo(x2-direction*6,y2+3);c.closePath();c.fill();
+ }
+ for(const [i,t] of tasks.entries()){
+  const x=x0+(date(t.start)-origin)*px,y=y0+i*row+17,w=Math.max(12,(date(t.end)-date(t.start)+1)*px);c.fillStyle=t.color;
+  if(t.milestone){c.save();c.translate(x,y+14);c.rotate(Math.PI/4);c.fillRect(-10,-10,20,20);c.restore();}
+  else{c.beginPath();c.roundRect(x,y,w,28,Math.min(7,w/2));c.fill();c.save();c.clip();c.fillStyle='#0003';c.fillRect(x,y,w*t.progress/100,28);text(t.name+' · '+t.progress+'%',x+10,y+18,w-18,'bold 10px sans-serif','#fff');c.restore();}
+ }
+ c.restore();line(x0,heading,x0,bottom,'#cbd5e1');line(pad,y0,rawWidth-pad,y0,'#cbd5e1');
+ if(!tasks.length)text('Sin tareas en el proyecto.',x0+20,y0+35,width-40,'13px sans-serif','#64748b');
+ text('◆ Hito · Línea rosa: hoy · Sombreado: fin de semana',pad,bottom+22,rawWidth-pad*2,'10px sans-serif','#64748b');return canvas;
+}
+$('exportPng').onclick=async()=>{
+ const button=$('exportPng');button.disabled=true;tell('Generando imagen del Gantt…');
+ try{const filename=exportFilename('png'),canvas=createGanttCanvas();const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('No se pudo generar el PNG.')),'image/png'));saveBlob(blob,filename);tell('Imagen PNG exportada.');}
+ catch(err){tell('No se pudo exportar la imagen: '+err.message);}finally{button.disabled=false;}
+};
 const columns=['id','name','start','end','progress','owner','group','color','dependencies','milestone','notes','project'];
 function encodeCsv(s){const rows=[columns,...s.tasks.map(t=>columns.map(k=>k==='project'?s.project:k==='dependencies'?t.dependencies.join('|'):t[k]))];return '\ufeff'+rows.map(row=>row.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');}
 function parseCsv(text){text=text.replace(/^\ufeff/,'');const first=text.split(/\r?\n/)[0];let quoted=false,commas=0,semis=0;for(let i=0;i<first.length;i++){if(first[i]==='"'){if(quoted&&first[i+1]==='"')i++;else quoted=!quoted;}else if(!quoted){if(first[i]===',')commas++;if(first[i]===';')semis++;}}const sep=semis>commas?';':',';let rows=[],row=[],cell='',inQuote=false,afterQuote=false;
@@ -97,3 +158,4 @@ $('print').onclick=()=>window.print();window.addEventListener('beforeunload',e=>
 try{if(localStorage.getItem(KEY))tell('Hay un plan guardado en este navegador. Pulsa Recuperar para abrirlo.');}catch{tell('El almacenamiento local está bloqueado. Puedes importar y exportar archivos.');}
 </script>
 </body></html>
+
