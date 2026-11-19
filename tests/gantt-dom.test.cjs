@@ -9,6 +9,28 @@ $('sample').click();assert.equal(w.document.querySelectorAll('.taskrow').length,
 assert.equal(evaluate('state.phases.length'),5);
 assert.equal(w.document.querySelectorAll('.phase-segment').length,5);
 assert.equal(w.document.querySelectorAll('.phase-shade').length,30);
+// Inline task detail must keep notes/dependency references safe and aligned.
+evaluate("state.tasks[1].notes='Nota <img src=x onerror=alert(1)>\\nSegunda línea';render()");
+const originalSnapshot=evaluate('snapshot()');
+w.document.querySelector('[data-expand="design"]').click();
+assert.equal(w.document.querySelector('[data-expand="design"]').getAttribute('aria-expanded'),'true');
+assert.equal(w.document.querySelectorAll('.task-detail-row').length,1);
+assert.match(w.document.querySelector('.detail-value').textContent,/Nota <img/);
+assert.equal(w.document.querySelectorAll('.detail-value img').length,0);
+assert.equal(w.document.querySelector('.dependency-chip').textContent,'Definir alcance');
+assert.equal(evaluate('snapshot()'),originalSnapshot,'expansion does not alter project data');
+assert.equal(Number(w.document.querySelector('.deps').getAttribute('height')),6*62+120);
+assert.ok(w.document.querySelector('.deps path').getAttribute('d').includes(' V 155 '),'dependency points use expanded row offsets');
+w.document.querySelector('[data-expand="design"]').click();
+assert.equal(w.document.querySelectorAll('.task-detail-row').length,0);
+// Fast delete must remove links, preserve other tasks, and be undoable.
+const removed=evaluate('JSON.stringify(state.tasks[0])');
+w.document.querySelector('[data-delete="discovery"]').click();
+assert.equal(evaluate('state.tasks.length'),5);
+assert.equal(evaluate('state.tasks.some(t=>t.id==="discovery")'),false);
+assert.equal(evaluate('state.tasks.some(t=>t.dependencies.includes("discovery"))'),false);
+$('undo').click();assert.equal(evaluate('state.tasks.length'),6);
+assert.equal(evaluate('JSON.stringify(state.tasks[0])'),removed);
 const source=evaluate('JSON.stringify(state.tasks[0])');
 w.document.querySelector('[data-copy="discovery"]').click();
 assert.equal(evaluate('state.tasks.length'),7);
