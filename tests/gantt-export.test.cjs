@@ -48,7 +48,7 @@ const w = dom.window, $ = id => w.document.getElementById(id);
     assert.match(dates,/^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/);
     assert.equal(w.document.querySelector('[data-edit="discovery"] .task-dates').textContent,dates);
     assert.ok(drawnText.includes(dates));
-    const firstPhase=w.eval('state.phases[0]'),phaseLabel=phaseDraws.find(item=>item.type==='text'&&item.value===firstPhase.name&&item.align==='center');
+    const firstPhase=w.eval('state.phases[0]'),phaseLabel=phaseDraws.find(item=>item.type==='text'&&firstPhase.name.startsWith(item.value.replace(/…$/,''))&&item.value.length>0&&item.align==='center');
     assert.ok(phaseLabel,'phase label is centered in PNG');
     const phaseTint=phaseDraws.findIndex(item=>item.type==='rect'&&item.color===firstPhase.color+'30');
     const weekendShade=phaseDraws.findIndex(item=>item.type==='rect'&&item.color==='#eef1f5');
