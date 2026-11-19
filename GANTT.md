@@ -7,13 +7,18 @@ Serve this repository as static files. No build step or backend is required.
 
 - Task and milestone editor: inclusive start/end dates, owner, effort (shown as Esfuerzo),
   progress, color, notes and finish-to-start dependencies.
+- Row actions (duplicate, delete, move up and move down) use a balanced two-column grid instead of stacking four vertically.
+- Quick-delete any task from its row, with confirmation, dependency cleanup and undo support. Expand its leading arrow for an inline, read-only panel displaying notes and prerequisite task names. The detail area grows without moving Gantt bars out of alignment, and expanding/collapsing does not modify project data.
+- Duplicate any task from its row or editing dialog; copies every field (dates, notes, effort, dependencies, milestone and progress) but generates a new task ID and inserts the copy immediately after the original.
+- Project phases: name, start/end dates and background color. A compact phase-label strip appears between dates and chart rows, and phase colors tint the complete date columns. Create, edit and remove phases without affecting tasks. Intervals may have gaps but phases cannot overlap.
 - Drag to move tasks; resize either end; keyboard-accessible editing through
   task names or focused bars (Enter/Space). Reorder tasks with the row arrows.
 - Day/week/month scales, zoom, fit, today marker and weekend shading.
 - Dependencies are visual: overlapping dates are flagged, without automatic
   rescheduling. Durations use calendar days, including weekends.
 - Undo/redo (up to 60 changes), sample project, printing via browser/PDF.
-- PNG export of the full Gantt, including off-screen rows/dates, title,
+- Phase names are centered and clipped to their time spans in PNG; phase tint is applied over weekend shading. In print/PDF, phase color uses inline SVG fills and explicit print color adjustment to avoid depending solely on CSS background printing.
+- PNG export of the full Gantt, including off-screen rows/dates, phase shading and labels, title,
   task details, dependencies, progress, milestones and weekend shading.
   Uses the current scale/zoom; large plans are downscaled to 16,000 pixels
   per dimension and 32 megapixels. Rendering runs locally with Canvas.
@@ -30,9 +35,9 @@ Serve this repository as static files. No build step or backend is required.
 ## JSON
 
 Schema version 1: `version`, `project`, `scale` (`day`, `week`, `month`),
-`zoom` (0.35–3), and `tasks`. Each task contains `id`, `name`, `start`, `end`,
+`zoom` (0.35–3), `tasks`, and `phases` (optional in older files). Each task contains `id`, `name`, `start`, `end`,
 `progress`, `owner`, `group`, `color`, `dependencies` (array of task IDs),
-`milestone` (boolean) and `notes`.
+`milestone` (boolean) and `notes`. Phases have `id`, `name`, `start`, `end`, and six-digit hex `color`.
 
 ## CSV
 
@@ -49,11 +54,11 @@ launch,Lanzamiento,2026-10-19,2026-10-19,0,Kevin,Entrega,#0891b2,scope,true,,Mi 
 Only `name`, `start` and `end` headers are required. Missing IDs are generated
 as `task-1`, `task-2`, etc. Dependency IDs use `|` as separator. Dates are
 `YYYY-MM-DD`; progress is a number from 0 to 100; milestones use `true`/`false`
-(or `1`/`0`). Milestones must start and end on the same day. CSV preserves all
-task data and project name; view scale/zoom are stored only in JSON/local save.
+(or `1`/`0`). Milestones must start and end on the same day. CSV exports `record_type` rows for tasks and phases, using `phase_id`, `phase_name`, `phase_start`, `phase_end`, and `phase_color` for phase records. Old CSV files without these columns remain importable. CSV preserves all
+task data, phase data and project name; view scale/zoom are stored only in JSON/local save.
 Export the sample project for a complete template.
 
-Imports are validated before replacing the current plan: up to 500 tasks,
+Imports are validated before replacing the current plan: up to 500 tasks, 100 phases (non-overlapping),
 5 MB file size, 10-year overall span, dates between 1900 and 2199, unique IDs,
 existing dependency IDs, no cycles, valid progress and chronological dates.
 Invalid imports leave the current project intact.

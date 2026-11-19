@@ -4,7 +4,7 @@ const { JSDOM } = require('jsdom');
 const { createCanvas } = require('@napi-rs/canvas');
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const downloads = [], buffers = [], errors = [], drawnText = [];
+const downloads = [], buffers = [], errors = [], drawnText = [], phaseDraws = [];
 const dom = new JSDOM(fs.readFileSync('gantt.html', 'utf8'), {
   url: 'https://example.test/gantt.html', runScripts: 'dangerously',
   beforeParse(w) {
@@ -15,7 +15,9 @@ const dom = new JSDOM(fs.readFileSync('gantt.html', 'utf8'), {
     w.HTMLAnchorElement.prototype.click = function () { downloads.push(this.download); };
     w.HTMLCanvasElement.prototype.getContext = function () {
       this.nativeCanvas = createCanvas(this.width, this.height);
-      const ctx=this.nativeCanvas.getContext('2d');const fill=ctx.fillText.bind(ctx);ctx.fillText=(value,...args)=>{drawnText.push(String(value));return fill(value,...args);};return ctx;
+      const ctx=this.nativeCanvas.getContext('2d');const fill=ctx.fillText.bind(ctx),rect=ctx.fillRect.bind(ctx);
+      ctx.fillRect=(x,y,width,height)=>{phaseDraws.push({type:'rect',x,y,width,height,color:ctx.fillStyle});return rect(x,y,width,height);};
+      ctx.fillText=(value,...args)=>{drawnText.push(String(value));phaseDraws.push({type:'text',value:String(value),align:ctx.textAlign,x:args[0]});return fill(value,...args);};return ctx;
     };
     w.HTMLCanvasElement.prototype.toBlob = function (cb) {
       const png = this.nativeCanvas.toBuffer('image/png');
@@ -30,6 +32,11 @@ const w = dom.window, $ = id => w.document.getElementById(id);
     assert.equal(w.document.querySelector('label[for="group"]').textContent, 'Esfuerzo');
     assert.equal($('exportPng').nextElementSibling.id, 'print');
     $('sample').click();
+    assert.equal(w.document.querySelector('.rowtools').children.length,4);
+    assert.ok(w.document.querySelector('.phase-shade svg rect[fill-opacity=".20"]'),'print-safe vector phase background');
+    assert.ok(w.document.querySelector('.phase-segment svg rect[fill-opacity=".32"]'),'print-safe vector phase header');
+    assert.match(w.document.querySelector('style').textContent,/print-color-adjust:exact!important/);
+
     $('projectName').value = 'Plan de implantación';
     $('projectName').dispatchEvent(new w.Event('change'));
     const before = w.eval('snapshot()');
@@ -41,6 +48,12 @@ const w = dom.window, $ = id => w.document.getElementById(id);
     assert.match(dates,/^\d{2}\/\d{2}\/\d{4} - \d{2}\/\d{2}\/\d{4}$/);
     assert.equal(w.document.querySelector('[data-edit="discovery"] .task-dates').textContent,dates);
     assert.ok(drawnText.includes(dates));
+    const firstPhase=w.eval('state.phases[0]'),phaseLabel=phaseDraws.find(item=>item.type==='text'&&firstPhase.name.startsWith(item.value.replace(/…$/,''))&&item.value.length>0&&item.align==='center');
+    assert.ok(phaseLabel,'phase label is centered in PNG');
+    const phaseTint=phaseDraws.findIndex(item=>item.type==='rect'&&item.color===firstPhase.color+'30');
+    const weekendShade=phaseDraws.findIndex(item=>item.type==='rect'&&item.color==='#eef1f5');
+    assert.ok(weekendShade>=0&&phaseTint>weekendShade,'weekends painted before phase overlays');
+
     assert.match(w.eval('taskDates(state.tasks.at(-1))'),/^\d{2}\/\d{2}\/\d{4}$/);
     assert.match($('dateRange').textContent,/^\d{2}\/\d{2}\/\d{4}/);
     assert.equal(buffers[0].subarray(0, 8).toString('hex'), '89504e470d0a1a0a');
