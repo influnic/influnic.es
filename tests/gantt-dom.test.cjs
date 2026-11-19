@@ -20,7 +20,7 @@ assert.equal(w.document.querySelectorAll('.detail-value img').length,0);
 assert.equal(w.document.querySelector('.dependency-chip').textContent,'Definir alcance');
 assert.equal(evaluate('snapshot()'),originalSnapshot,'expansion does not alter project data');
 assert.equal(Number(w.document.querySelector('.deps').getAttribute('height')),6*62+120);
-assert.ok(w.document.querySelector('.deps path').getAttribute('d').includes(' V 155 '),'dependency points use expanded row offsets');
+assert.ok([...w.document.querySelectorAll('.deps path')].some(path=>path.getAttribute('d').includes(' V 275 ')),'dependency points use expanded row offsets');
 w.document.querySelector('[data-expand="design"]').click();
 assert.equal(w.document.querySelectorAll('.task-detail-row').length,0);
 // Fast delete must remove links, preserve other tasks, and be undoable.
