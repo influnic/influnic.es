@@ -7,6 +7,7 @@ Serve this repository as static files. No build step or backend is required.
 
 - Task and milestone editor: inclusive start/end dates, owner, effort (shown as Esfuerzo),
   progress, color, notes and finish-to-start dependencies.
+- Row actions (duplicate, delete, move up and move down) use a balanced two-column grid instead of stacking four vertically.
 - Quick-delete any task from its row, with confirmation, dependency cleanup and undo support. Expand its leading arrow for an inline, read-only panel displaying notes and prerequisite task names. The detail area grows without moving Gantt bars out of alignment, and expanding/collapsing does not modify project data.
 - Duplicate any task from its row or editing dialog; copies every field (dates, notes, effort, dependencies, milestone and progress) but generates a new task ID and inserts the copy immediately after the original.
 - Project phases: name, start/end dates and background color. A compact phase-label strip appears between dates and chart rows, and phase colors tint the complete date columns. Create, edit and remove phases without affecting tasks. Intervals may have gaps but phases cannot overlap.
@@ -16,6 +17,7 @@ Serve this repository as static files. No build step or backend is required.
 - Dependencies are visual: overlapping dates are flagged, without automatic
   rescheduling. Durations use calendar days, including weekends.
 - Undo/redo (up to 60 changes), sample project, printing via browser/PDF.
+- Phase names are centered and clipped to their time spans in PNG; phase tint is applied over weekend shading. In print/PDF, phase color uses inline SVG fills and explicit print color adjustment to avoid depending solely on CSS background printing.
 - PNG export of the full Gantt, including off-screen rows/dates, phase shading and labels, title,
   task details, dependencies, progress, milestones and weekend shading.
   Uses the current scale/zoom; large plans are downscaled to 16,000 pixels
