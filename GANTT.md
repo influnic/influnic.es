@@ -7,6 +7,7 @@ Serve this repository as static files. No build step or backend is required.
 
 - Task and milestone editor: inclusive start/end dates, owner, effort (shown as Esfuerzo),
   progress, color, notes and finish-to-start dependencies.
+- Quick-delete any task from its row, with confirmation, dependency cleanup and undo support. Expand its leading arrow for an inline, read-only panel displaying notes and prerequisite task names. The detail area grows without moving Gantt bars out of alignment, and expanding/collapsing does not modify project data.
 - Duplicate any task from its row or editing dialog; copies every field (dates, notes, effort, dependencies, milestone and progress) but generates a new task ID and inserts the copy immediately after the original.
 - Project phases: name, start/end dates and background color. A compact phase-label strip appears between dates and chart rows, and phase colors tint the complete date columns. Create, edit and remove phases without affecting tasks. Intervals may have gaps but phases cannot overlap.
 - Drag to move tasks; resize either end; keyboard-accessible editing through
