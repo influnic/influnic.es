@@ -12,6 +12,24 @@ const assert = require('node:assert/strict');
     await page.goto(process.env.GANTT_URL || 'http://127.0.0.1:8765/gantt.html');
     await page.locator('#sample').click();
     assert.equal(await page.locator('.taskrow').count(), 6);
+    // Expanded details must remain within the sticky task/responsible column.
+    await page.locator('[data-expand="design"]').click();
+    const desktopDetail = await page.evaluate(() => {
+      const meta = document.querySelector('.taskrow .taskmeta').getBoundingClientRect();
+      const detail = document.querySelector('.detail-card').getBoundingClientRect();
+      return { metaLeft: meta.left, metaRight: meta.right, detailLeft: detail.left, detailRight: detail.right };
+    });
+    assert.ok(Math.abs(desktopDetail.detailLeft - desktopDetail.metaLeft) < 2);
+    assert.ok(desktopDetail.detailRight <= desktopDetail.metaRight + 2);
+    await page.locator('[data-expand="design"]').click();
+    // Long phase labels should wrap rather than extend beyond the sidebar.
+    await page.evaluate(() => { state.phases[0].name = 'Fase de arquitectura y coordinación extraordinariamente prolongada SUPERLARGASINESPACIOS'; render(); });
+    assert.equal(await page.evaluate(() => {
+      const label = document.querySelector('[data-phase="phase-scope"] strong');
+      const card = label.closest('.phase-item');
+      return label.getBoundingClientRect().right <= card.getBoundingClientRect().right && label.scrollWidth <= label.clientWidth + 1;
+    }), true);
+
     const validation = await page.evaluate(() => {
       const s = copy(state);
       s.project = 'Proyecto ñ, "demo"';
@@ -83,6 +101,16 @@ const assert = require('node:assert/strict');
     await page.setViewportSize({ width: 390, height: 844 });
     await page.waitForTimeout(250);
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+    await page.locator('[data-expand="design"]').click();
+    const mobileDetail = await page.evaluate(() => {
+      const meta = document.querySelector('.taskrow .taskmeta').getBoundingClientRect();
+      const detail = document.querySelector('.detail-card').getBoundingClientRect();
+      return { metaLeft: meta.left, metaRight: meta.right, detailLeft: detail.left, detailRight: detail.right };
+    });
+    assert.ok(Math.abs(mobileDetail.detailLeft - mobileDetail.metaLeft) < 2);
+    assert.ok(mobileDetail.detailRight <= mobileDetail.metaRight + 2);
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
+
     await page.screenshot({ path: '/tmp/gantt-mobile.png', fullPage: true });
     assert.deepEqual(errors, []);
     console.log('PASS: rendering, JSON/CSV round trips, validations, save/load, drag, resize, undo, edit, downloads/imports, atomic failed import, escaping, responsive layout.');
