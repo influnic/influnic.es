@@ -7,6 +7,16 @@ const w=dom.window,$=id=>w.document.getElementById(id),evaluate=code=>w.eval(cod
 let nextId=0;Object.defineProperty(w.crypto,'randomUUID',{configurable:true,value:()=>('test-copy-'+(++nextId))});
 $('sample').click();assert.equal(w.document.querySelectorAll('.taskrow').length,6);
 assert.equal(evaluate('state.phases.length'),5);
+
+const css=w.document.querySelector('style').textContent;
+assert.match(css,/\.detail-card\{[^}]*flex:0 0 400px;width:400px;max-width:400px/,'desktop details match metadata width');
+assert.match(css,/@media\(max-width:700px\)\{\.task-detail-row\{height:168px\}\.detail-card\{flex-basis:220px;width:220px;max-width:220px/,'mobile details match metadata width');
+assert.match(css,/\.phase-item strong\{[^}]*white-space:normal;overflow-wrap:anywhere/,'long phase labels wrap');
+assert.match(css,/\.phase-item span:nth-child\(2\)\{[^}]*min-width:0;flex:1 1 0/,'phase labels shrink within card');
+evaluate("state.phases[0].name='Nombre de fase extraordinariamente largo con palabras extensas y sin espacios-superlargos';render()");
+assert.equal(w.document.querySelector('[data-phase="phase-scope"] strong').textContent,evaluate('state.phases[0].name'));
+assert.ok(w.document.querySelector('[data-phase="phase-scope"] .phase-edit-indicator'));
+
 assert.equal(w.document.querySelectorAll('.phase-segment').length,5);
 assert.equal(w.document.querySelectorAll('.phase-shade').length,30);
 // Inline task detail must keep notes/dependency references safe and aligned.
