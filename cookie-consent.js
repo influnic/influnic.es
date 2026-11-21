@@ -190,7 +190,8 @@
     trigger.className='ics-manage';
     trigger.setAttribute('data-cookie-settings','');
     trigger.hidden=true;
-    if(document.querySelector('footer'))document.querySelector('footer').appendChild(trigger);
+    const footer=document.querySelector('footer');
+    if(footer)(footer.querySelector('.footer-bottom, .footrow, .mt-8')||footer).appendChild(trigger);
     else{
       trigger.classList.add('ics-manage-floating');
       document.body.appendChild(trigger);
