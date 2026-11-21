@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Influnic — Adaptive Consultancy</title>
-  <meta name="description" content="Influnic: Adaptive Technology. Consultoría, IT Outsourcing, ServiceNow, IA aplicada y plataformas web para PYMES y grandes organizaciones." />
+  <meta name="description" content="Influnic: soluciones ServiceNow, herramientas de gestión de proyectos y servicios web para empresas y PYMEs." />
   <link rel="icon" href="/favicon.ico" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -36,10 +36,39 @@
       #fff;
     }
     .brand-logo-img{display:block; width:auto; object-fit:contain}
+
+    /* Service catalog */
+    .catalog-section{background:linear-gradient(180deg,#f9f8fc 0%,#fff 55%)}
+    .catalog-intro{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:56px}
+    .catalog-intro>p{max-width:420px;color:#64748b;line-height:1.7;font-size:.95rem}
+    .catalog-eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.2em;color:var(--brand-purple)}
+    .service-group{padding:0 0 48px;margin-bottom:42px;border-bottom:1px solid #e5e7eb}
+    .service-group:last-child{margin-bottom:0;padding-bottom:0;border-bottom:0}
+    .service-group-heading{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:22px}
+    .service-group-title{display:flex;align-items:baseline;gap:18px;min-width:0}
+    .service-group-number{flex:none;color:var(--brand-purple);font-size:.72rem;letter-spacing:.14em;font-weight:800}
+    .service-group-title h3{font-size:1.45rem;line-height:1.3;font-weight:800;letter-spacing:-.025em}
+    .service-group-title p{color:#64748b;font-size:.87rem;margin-top:7px;line-height:1.55}
+    .service-group-tag{color:#6b7280;border:1px solid #e2e8f0;padding:6px 11px;border-radius:99px;font-size:.7rem;white-space:nowrap}
+    .catalog-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .catalog-card{display:flex;flex-direction:column;min-width:0;min-height:232px;padding:25px;background:white;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 24px rgba(31,16,50,.035);transition:transform .18s,border-color .18s,box-shadow .18s}
+    .catalog-card:hover{transform:translateY(-3px);border-color:#c9a1eb;box-shadow:0 14px 32px rgba(68,23,94,.09)}
+    .catalog-card:focus-visible{outline:3px solid var(--brand-purple);outline-offset:3px}
+    .catalog-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+    .catalog-number{color:#a78bfa;font-size:.8rem;font-weight:800;letter-spacing:.12em}
+    .catalog-icon{background:#f4e8fe;color:#8a00e7;padding:4px 10px;border-radius:9px;font-size:1rem}
+    .catalog-soon{font-size:.68rem;font-weight:700;border-radius:99px;background:#fff8d2;color:#725b00;padding:5px 9px}
+    .catalog-card h4{color:#111827;font-size:1.08rem;line-height:1.38;font-weight:750;overflow-wrap:anywhere}
+    .catalog-card p{font-size:.86rem;line-height:1.6;color:#64748b;margin-top:11px;flex:1}
+    .catalog-action{display:inline-flex;align-items:center;gap:7px;margin-top:22px;color:#6d28d9;font-size:.81rem;font-weight:750}
+    @media(max-width:920px){.catalog-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.catalog-intro{align-items:start;flex-direction:column;margin-bottom:38px}.service-group-tag{display:none}}
+    @media(max-width:600px){.catalog-grid{grid-template-columns:minmax(0,1fr)}.service-group-title{gap:10px}.catalog-card{min-height:195px;padding:21px}.service-group{padding-bottom:34px;margin-bottom:34px}}
+    @media(prefers-reduced-motion:reduce){.catalog-card{transition:none}}
+
   </style>
   <!-- Open Graph -->
   <meta property="og:title" content="Influnic — Adaptive Consultancy" />
-  <meta property="og:description" content="ServiceNow, IA aplicada y plataformas web. Soluciones adaptativas para tu negocio." />
+  <meta property="og:description" content="ServiceNow, herramientas de gestión de proyectos y servicios web para tu negocio." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://influnic.com/" />
   <meta property="og:image" content="/og-image.png" />
@@ -149,74 +178,22 @@
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services" class="py-16 md:py-20">
+  <!-- Services: three service families, three products per family -->
+  <section id="services" class="catalog-section py-16 md:py-24 border-t border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl md:text-3xl font-bold" data-i18n="services.title">Servicios</h2>
-      <div class="underline-accent mt-2 w-16"></div>
-      <div class="mt-8 grid md:grid-cols-3 gap-6">
-        <div class="md:col-span-3 p-6 md:p-8 border rounded-2xl hover:shadow-md transition hero-card">
-          <div class="grid lg:grid-cols-[1fr_auto] gap-6 lg:items-start">
-            <div>
-              <div class="text-lg font-bold text-gray-800" data-i18n="services.webOffer.title">Página Web a medida</div>
-              <p class="mt-2 text-sm text-gray-600 max-w-3xl" data-i18n="services.webOffer.body">Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto.</p>
-              <div class="mt-5 text-sm font-semibold text-gray-700" data-i18n="services.webOffer.includes">El servicio incluye:</div>
-              <ul class="mt-3 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-sm text-gray-600">
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature1">Hasta 5 secciones</span></li>
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature2">Esquema de colores personalizable: 1 fondo y 3 colores de acento</span></li>
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature3">1 logo en la cabecera y otro en el pie de página</span></li>
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature4">1 servicio destacado, opcionalmente con botón a un enlace externo</span></li>
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature5">Hasta 6 servicios con título, descripción y hasta 4 píldoras destacadas</span></li>
-                <li class="flex gap-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature6">1 enlace personalizado por sección</span></li>
-                <li class="flex gap-2 sm:col-span-2"><span class="accent-purple font-bold">✓</span><span data-i18n="services.webOffer.feature7">Hasta 5 idiomas. Las traducciones deben proporcionarse; el servicio de traducción se cobra por separado.</span></li>
-              </ul>
-            </div>
-            <div class="lg:min-w-[240px] lg:text-right border-t lg:border-t-0 lg:border-l border-gray-200 pt-5 lg:pt-0 lg:pl-6">
-              <div class="text-3xl font-extrabold text-gray-900" data-i18n="services.webOffer.monthly">0 € / mes</div>
-              <div class="mt-1 text-sm text-gray-600" data-i18n="services.webOffer.oneTime">Pago único de 59,99 € + IVA</div>
-              <a href="https://buy.stripe.com/bJebJ0ca21cXfkZ6eLg3605" target="_blank" rel="noopener" class="inline-flex justify-center mt-5 px-5 py-3 rounded-lg font-semibold text-sm bg-gray-900 text-white hover:bg-gray-700 focus:outline-none focus:ring-2 ring-yellow" data-i18n="services.webOffer.cta">Contratar mi página web</a>
-            </div>
-          </div>
-        </div>
-        <div class="p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="text-sm font-semibold text-gray-700" data-i18n="services.consulting.title">Consultoría</div>
-          <p class="mt-2 text-sm text-gray-600" data-i18n="services.consulting.body">Implementación, upgrades y mejora continua</p>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">ServiceNow</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">Web</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.digitalTransformation">Transformación Digital</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.collaboration">Colaboración y trabajo remoto</span>
-        </div>
-        <div class="p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="text-sm font-semibold text-gray-700" data-i18n="services.outsourcing.title">Outsourcing</div>
-          <p class="mt-2 text-sm text-gray-600" data-i18n="services.outsourcing.body">Búsqueda y contratación de perfiles IT para las necesidades de staffing de su empresa</p>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.outsourcedHiring">Contratación outsourced</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.feeSearch">Búsqueda por fee</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.databaseAccess">Acceso a base de datos propia</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.interviews">Gestión de entrevistas</span>
-        </div>
-        <div class="p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="text-sm font-semibold text-gray-700" data-i18n="services.ai.title">IA aplicada & Automatización</div>
-          <p class="mt-2 text-sm text-gray-600" data-i18n="services.ai.body">Asistentes, Chatbots, Agentes, Flujos, Automatización Documental...</p>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.generativeAi">IA Generativa</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">OpenAI</span>
-        </div>
-        <div class="p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="text-sm font-semibold text-gray-700" data-i18n="services.portals.title">Portales & Web</div>
-          <p class="mt-2 text-sm text-gray-600" data-i18n="services.portals.body">Landing pages, formularios y catálogos conectados a tus sistemas sin mantenimiento.</p>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">Front-end</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">Back-end</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">WordPress</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">Mobile responsive</span>
-        </div>
-        <div class="p-6 border rounded-xl hover:shadow-sm transition">
-          <div class="text-sm font-semibold text-gray-700" data-i18n="services.training.title">Formación</div>
-          <p class="mt-2 text-sm text-gray-600" data-i18n="services.training.body">Catálogo propio y preparación de formaciones online y presenciales a medida</p>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.itDev">IT & Desarrollo</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.security">Seguridad y protección de datos</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple" data-i18n="tag.vr">Realidad Virtual</span>
-          <span class="inline-block mt-4 text-xs px-2 py-1 rounded-full ring-1 ring-purple">Web3</span>
-        </div>
+      <div class="catalog-intro">
+        <div><span class="catalog-eyebrow" data-i18n="services.eyebrow">QUÉ HACEMOS</span><h2 class="text-3xl md:text-4xl font-extrabold" data-i18n="services.title">Servicios y herramientas</h2><div class="underline-accent mt-3 w-24"></div></div>
+        <p data-i18n="services.intro">Desde ServiceNow hasta herramientas de productividad y servicios web. Elige la solución que mejor se adapte a tu proyecto.</p>
       </div>
+      <section class="service-group" aria-labelledby="group-servicenow"><div class="service-group-heading"><div class="service-group-title"><span class="service-group-number">01 / 03</span><div><h3 id="group-servicenow" data-i18n="services.servicenow.heading">ServiceNow</h3><p data-i18n="services.servicenow.intro">Aplicaciones y servicios especializados para aprovechar al máximo ServiceNow.</p></div></div><span class="service-group-tag">Enterprise service management</span></div><div class="catalog-grid"><a class="catalog-card group" href="servicenow-applications.html"><div class="catalog-card-top"><span class="catalog-number">01</span><span class="catalog-soon" data-i18n="services.badge.soon">En preparación</span></div><h4 data-i18n="services.servicenow.applications.title">Aplicaciones ServiceNow</h4><p data-i18n="services.servicenow.applications.body">Aplicaciones y componentes que amplían las capacidades de tu instancia.</p><span class="catalog-action"><span data-i18n="services.cta.soon">Ver próximamente</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="servicenow.html"><div class="catalog-card-top"><span class="catalog-number">02</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.servicenow.managed.title">Servicios gestionados ServiceNow</h4><p data-i18n="services.servicenow.managed.body">Soporte, desarrollo y mejora continua adaptados a tu organización.</p><span class="catalog-action"><span data-i18n="services.cta.explore">Ver servicios</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=zMEtl7-WhU29dI_U47rVp_aP-PJ7cFBPoAnVTx0p3y9UOUFGRUtQWjlXN0lHU0RUS0I2T0VWSDJWSS4u&amp;r7fb3e6a1cf134d32beffb1cd6eeffaa3=%22ServiceLite%20(ServiceNow%20para%20PYMEs)%22" target="_blank" rel="noopener noreferrer"><div class="catalog-card-top"><span class="catalog-number">03</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.servicenow.lite.title">ServiceLite (ServiceNow para PYMEs)</h4><p data-i18n="services.servicenow.lite.body">Cuéntanos qué necesita tu pyme y evaluaremos contigo una solución proporcionada.</p><span class="catalog-action"><span data-i18n="services.cta.request">Solicitar información</span><span aria-hidden="true">↗</span></span></a></div></section>
+      <section class="service-group" aria-labelledby="group-projects"><div class="service-group-heading"><div class="service-group-title"><span class="service-group-number">02 / 03</span><div><h3 id="group-projects" data-i18n="services.projects.heading">Herramientas de gestión de proyectos</h3><p data-i18n="services.projects.intro">Herramientas gratuitas y sencillas para organizar personas, tareas y entregables.</p></div></div><span class="service-group-tag">Productivity tools</span></div><div class="catalog-grid"><a class="catalog-card group" href="orgchart.html"><div class="catalog-card-top"><span class="catalog-number">01</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.projects.orgchart.title">Editor de organigramas</h4><p data-i18n="services.projects.orgchart.body">Crea, organiza y exporta estructuras de equipos desde el navegador.</p><span class="catalog-action"><span data-i18n="services.cta.open">Abrir herramienta</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="gantt.html"><div class="catalog-card-top"><span class="catalog-number">02</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.projects.gantt.title">Gestor de proyectos Gantt</h4><p data-i18n="services.projects.gantt.body">Planifica fases, tareas y dependencias sobre una línea temporal visual.</p><span class="catalog-action"><span data-i18n="services.cta.open">Abrir herramienta</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="coming-soon.html?service=scrum"><div class="catalog-card-top"><span class="catalog-number">03</span><span class="catalog-soon" data-i18n="services.badge.soon">En preparación</span></div><h4 data-i18n="services.projects.scrum.title">Gestor de sprints Scrum</h4><p data-i18n="services.projects.scrum.body">Organiza iteraciones, objetivos y seguimiento de sprints.</p><span class="catalog-action"><span data-i18n="services.cta.soon">Ver próximamente</span><span aria-hidden="true">↗</span></span></a></div></section>
+      <section class="service-group" aria-labelledby="group-web"><div class="service-group-heading"><div class="service-group-title"><span class="service-group-number">03 / 03</span><div><h3 id="group-web" data-i18n="services.web.heading">Servicios web</h3><p data-i18n="services.web.intro">Infraestructura y desarrollo web, y herramientas de colaboración para tu negocio.</p></div></div><span class="service-group-tag">Digital workplace</span></div><div class="catalog-grid"><a class="catalog-card group" href="coming-soon.html?service=domains"><div class="catalog-card-top"><span class="catalog-number">01</span><span class="catalog-soon" data-i18n="services.badge.soon">En preparación</span></div><h4 data-i18n="services.web.domains.title">Compra de dominios</h4><p data-i18n="services.web.domains.body">Encuentra y gestiona el dominio adecuado para tu proyecto.</p><span class="catalog-action"><span data-i18n="services.cta.soon">Ver próximamente</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=zMEtl7-WhU29dI_U47rVp_aP-PJ7cFBPoAnVTx0p3y9UOUFGRUtQWjlXN0lHU0RUS0I2T0VWSDJWSS4u&amp;r7fb3e6a1cf134d32beffb1cd6eeffaa3=%22Desarrollo%20web%20a%20medida%22" target="_blank" rel="noopener noreferrer"><div class="catalog-card-top"><span class="catalog-number">02</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.web.development.title">Desarrollo web a medida</h4><p data-i18n="services.web.development.body">Solicita una web o aplicación hecha a medida de tus objetivos.</p><span class="catalog-action"><span data-i18n="services.cta.request">Solicitar información</span><span aria-hidden="true">↗</span></span></a>
+<a class="catalog-card group" href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=zMEtl7-WhU29dI_U47rVp_aP-PJ7cFBPoAnVTx0p3y9UOUFGRUtQWjlXN0lHU0RUS0I2T0VWSDJWSS4u&amp;r7fb3e6a1cf134d32beffb1cd6eeffaa3=%22Workplace%20%5Bo365%2C%20Email%20%26%20Teams%5D%22" target="_blank" rel="noopener noreferrer"><div class="catalog-card-top"><span class="catalog-number">03</span><span class="catalog-icon" aria-hidden="true">↗</span></div><h4 data-i18n="services.web.workplace.title">Workplace (O365, correo y Teams)</h4><p data-i18n="services.web.workplace.body">Configura Microsoft 365, correo y colaboración para tu equipo.</p><span class="catalog-action"><span data-i18n="services.cta.request">Solicitar información</span><span aria-hidden="true">↗</span></span></a></div></section>
     </div>
   </section>
 
@@ -288,36 +265,43 @@
       es: {
         "nav.about":"Nosotros","nav.services":"Servicios","nav.cases":"Casos","nav.contact":"Contacto",
         "hero.title":"Tecnología que se adapta a tu negocio.",
-        "hero.subtitle":"Consultoría, Outsourcing, Formación, IA aplicada y plataformas web para acelerar la ejecución y reducir la fricción operativa. Trabajamos con equipos grandes y PYMES: rápido, seguro y medible.",
-        "hero.ctaContact":"Solicitar contacto","hero.ctaServices":"Ver servicios","hero.response":"Respuesta en 24–48h","hero.languages":"Español / English / Français / Català","hero.keyAreas":"Áreas clave",
-        "areas.consulting":"Consultoría","areas.outsourcing":"IT Outsourcing","areas.ai":"IA aplicada","areas.automation":"Automatización","areas.web":"Portales web","areas.training":"Formación",
+        "hero.subtitle":"Soluciones ServiceNow, herramientas de gestión de proyectos y servicios web para transformar ideas en resultados.",
+        "hero.ctaContact":"Solicitar contacto","hero.ctaServices":"Ver servicios","hero.response":"Respuesta en 24–48h","hero.languages":"Español / English / Français / Català","hero.keyAreas":"Áreas de actividad",
+        "areas.consulting":"ServiceNow","areas.outsourcing":"Servicios gestionados","areas.ai":"Gestión de proyectos","areas.automation":"Herramientas gratuitas","areas.web":"Servicios web","areas.training":"Workplace y colaboración",
         "about.title":"Quiénes somos",
-        "about.body":"Somos una consultora adaptativa. Integramos procesos y tecnología para resolver problemas reales: desde la gestión de servicios empresariales (ITSM) hasta experiencias de cliente y automatización con IA. Nuestro enfoque es práctico, medible y orientado a resultados.",
-        "services.title":"Servicios",
-        "services.webOffer.title":"Página Web a medida",
-        "services.webOffer.body":"Un diseño personalizado con la información, estilo e imágenes de tu negocio o proyecto.",
-        "services.webOffer.includes":"El servicio incluye:",
-        "services.webOffer.feature1":"Hasta 5 secciones",
-        "services.webOffer.feature2":"Esquema de colores personalizable: 1 fondo y 3 colores de acento",
-        "services.webOffer.feature3":"1 logo en la cabecera y otro en el pie de página",
-        "services.webOffer.feature4":"1 servicio destacado, opcionalmente con botón a un enlace externo",
-        "services.webOffer.feature5":"Hasta 6 servicios con título, descripción y hasta 4 píldoras destacadas",
-        "services.webOffer.feature6":"1 enlace personalizado por sección",
-        "services.webOffer.feature7":"Hasta 5 idiomas. Las traducciones deben proporcionarse; el servicio de traducción se cobra por separado.",
-        "services.webOffer.monthly":"0 € / mes",
-        "services.webOffer.oneTime":"Pago único de 59,99 € + IVA",
-        "services.webOffer.cta":"Contratar mi página web",
-        "services.consulting.title":"Consultoría",
-        "services.consulting.body":"Implementación, upgrades y mejora continua",
-        "services.outsourcing.title":"Outsourcing",
-        "services.outsourcing.body":"Búsqueda y contratación de perfiles IT para las necesidades de staffing de su empresa",
-        "services.ai.title":"IA aplicada & Automatización",
-        "services.ai.body":"Asistentes, Chatbots, Agentes, Flujos, Automatización Documental...",
-        "services.portals.title":"Portales & Web",
-        "services.portals.body":"Landing pages, formularios y catálogos conectados a tus sistemas sin mantenimiento.",
-        "services.training.title":"Formación",
-        "services.training.body":"Catálogo propio y preparación de formaciones online y presenciales a medida",
-        "tag.digitalTransformation":"Transformación Digital","tag.collaboration":"Colaboración y trabajo remoto","tag.outsourcedHiring":"Contratación outsourced","tag.feeSearch":"Búsqueda por fee","tag.databaseAccess":"Acceso a base de datos propia","tag.interviews":"Gestión de entrevistas","tag.generativeAi":"IA Generativa","tag.itDev":"IT & Desarrollo","tag.security":"Seguridad y protección de datos","tag.vr":"Realidad Virtual",
+        "about.body":"Ayudamos a organizaciones a mejorar la gestión de sus servicios, proyectos y entornos digitales. Combinamos experiencia en ServiceNow, herramientas prácticas y servicios web diseñados en torno a cada necesidad.",
+        "services.title":"Servicios y herramientas",
+        "services.web.workplace.body":"Configura Microsoft 365, correo y colaboración para tu equipo.",
+        "services.web.workplace.title":"Workplace (O365, correo y Teams)",
+        "services.web.development.body":"Solicita una web o aplicación hecha a medida de tus objetivos.",
+        "services.web.development.title":"Desarrollo web a medida",
+        "services.web.domains.body":"Encuentra y gestiona el dominio adecuado para tu proyecto.",
+        "services.web.domains.title":"Compra de dominios",
+        "services.web.intro":"Infraestructura y desarrollo web, y herramientas de colaboración para tu negocio.",
+        "services.web.heading":"Servicios web",
+        "services.projects.scrum.body":"Organiza iteraciones, objetivos y seguimiento de sprints.",
+        "services.projects.scrum.title":"Gestor de sprints Scrum",
+        "services.projects.gantt.body":"Planifica fases, tareas y dependencias sobre una línea temporal visual.",
+        "services.projects.gantt.title":"Gestor de proyectos Gantt",
+        "services.projects.orgchart.body":"Crea, organiza y exporta estructuras de equipos desde el navegador.",
+        "services.projects.orgchart.title":"Editor de organigramas",
+        "services.projects.intro":"Herramientas gratuitas y sencillas para organizar personas, tareas y entregables.",
+        "services.projects.heading":"Herramientas de gestión de proyectos",
+        "services.servicenow.lite.body":"Cuéntanos qué necesita tu pyme y evaluaremos contigo una solución proporcionada.",
+        "services.servicenow.lite.title":"ServiceLite (ServiceNow para PYMEs)",
+        "services.servicenow.managed.body":"Soporte, desarrollo y mejora continua adaptados a tu organización.",
+        "services.servicenow.managed.title":"Servicios gestionados ServiceNow",
+        "services.servicenow.applications.body":"Aplicaciones y componentes que amplían las capacidades de tu instancia.",
+        "services.servicenow.applications.title":"Aplicaciones ServiceNow",
+        "services.servicenow.intro":"Aplicaciones y servicios especializados para aprovechar al máximo ServiceNow.",
+        "services.servicenow.heading":"ServiceNow",
+        "services.cta.open":"Abrir herramienta",
+        "services.cta.request":"Solicitar información",
+        "services.cta.explore":"Ver servicios",
+        "services.cta.soon":"Ver próximamente",
+        "services.badge.soon":"En preparación",
+        "services.intro":"Desde ServiceNow hasta herramientas de productividad y servicios web. Elige la solución que mejor se adapte a tu proyecto.",
+        "services.eyebrow":"QUÉ HACEMOS",
         "cases.title":"Experiencia",
         "cases.body":"Hemos colaborado con organizaciones en los sectores bancario, inmobiliario, legal, energía, farmacéutico, aeronáutico y administración pública. Referencias disponibles bajo NDA.",
         "contact.title":"Hablemos",
@@ -338,36 +322,43 @@
       en: {
         "nav.about":"About","nav.services":"Services","nav.cases":"Experience","nav.contact":"Contact",
         "hero.title":"Technology that adapts to your business.",
-        "hero.subtitle":"Consulting, outsourcing, training, applied AI and web platforms to accelerate execution and reduce operational friction. We work with large teams and SMEs: fast, secure and measurable.",
-        "hero.ctaContact":"Request contact","hero.ctaServices":"View services","hero.response":"Response in 24–48h","hero.languages":"Spanish / English / French / Catalan","hero.keyAreas":"Key areas",
-        "areas.consulting":"Consulting","areas.outsourcing":"IT Outsourcing","areas.ai":"Applied AI","areas.automation":"Automation","areas.web":"Web portals","areas.training":"Training",
+        "hero.subtitle":"ServiceNow solutions, project management tools and web services to turn ideas into results.",
+        "hero.ctaContact":"Request contact","hero.ctaServices":"View services","hero.response":"Response in 24–48h","hero.languages":"Spanish / English / French / Catalan","hero.keyAreas":"What we do",
+        "areas.consulting":"ServiceNow","areas.outsourcing":"Managed services","areas.ai":"Project management","areas.automation":"Free tools","areas.web":"Web services","areas.training":"Workplace and collaboration",
         "about.title":"About us",
-        "about.body":"We are an adaptive consultancy. We integrate processes and technology to solve real problems: from enterprise service management (ITSM) to customer experiences and AI automation. Our approach is practical, measurable and results-oriented.",
-        "services.title":"Services",
-        "services.webOffer.title":"Custom website",
-        "services.webOffer.body":"A custom design built around the information, visual style and images of your business or project.",
-        "services.webOffer.includes":"The service includes:",
-        "services.webOffer.feature1":"Up to 5 sections",
-        "services.webOffer.feature2":"Customizable colour scheme: 1 background and 3 accent colours",
-        "services.webOffer.feature3":"1 logo in the header and another in the footer",
-        "services.webOffer.feature4":"1 featured service, optionally with a button linking to an external page",
-        "services.webOffer.feature5":"Up to 6 services, each with a title, description and up to 4 highlight tags",
-        "services.webOffer.feature6":"1 custom link per section",
-        "services.webOffer.feature7":"Up to 5 languages. Translations must be supplied; translation services are charged separately.",
-        "services.webOffer.monthly":"€0 / month",
-        "services.webOffer.oneTime":"One-time payment of €59.99 + VAT",
-        "services.webOffer.cta":"Order my website",
-        "services.consulting.title":"Consulting",
-        "services.consulting.body":"Implementation, upgrades and continuous improvement",
-        "services.outsourcing.title":"Outsourcing",
-        "services.outsourcing.body":"Search and hiring of IT profiles for your company's staffing needs",
-        "services.ai.title":"Applied AI & Automation",
-        "services.ai.body":"Assistants, chatbots, agents, workflows, document automation...",
-        "services.portals.title":"Portals & Web",
-        "services.portals.body":"Landing pages, forms and catalogues connected to your systems with low maintenance.",
-        "services.training.title":"Training",
-        "services.training.body":"Own catalogue and preparation of tailored online and in-person training",
-        "tag.digitalTransformation":"Digital Transformation","tag.collaboration":"Collaboration and remote work","tag.outsourcedHiring":"Outsourced hiring","tag.feeSearch":"Fee-based search","tag.databaseAccess":"Own database access","tag.interviews":"Interview management","tag.generativeAi":"Generative AI","tag.itDev":"IT & Development","tag.security":"Security and data protection","tag.vr":"Virtual Reality",
+        "about.body":"We help organisations improve how they manage services, projects and digital workplaces. We combine ServiceNow expertise, practical tools and web services tailored to each need.",
+        "services.title":"Services and tools",
+        "services.web.workplace.body":"Set up Microsoft 365, email and collaboration for your team.",
+        "services.web.workplace.title":"Workplace (O365, Email & Teams)",
+        "services.web.development.body":"Request a website or application designed around your goals.",
+        "services.web.development.title":"Custom Web Development",
+        "services.web.domains.body":"Find and manage the right domain for your project.",
+        "services.web.domains.title":"Purchase Domains",
+        "services.web.intro":"Web infrastructure and development, plus collaboration tools for your business.",
+        "services.web.heading":"Web Services",
+        "services.projects.scrum.body":"Organise iterations, goals and sprint progress.",
+        "services.projects.scrum.title":"Scrum Sprint Manager",
+        "services.projects.gantt.body":"Plan phases, tasks and dependencies on a visual timeline.",
+        "services.projects.gantt.title":"Gantt Project Manager",
+        "services.projects.orgchart.body":"Build, organise and export team structures in your browser.",
+        "services.projects.orgchart.title":"OrgChart Builder",
+        "services.projects.intro":"Simple, free tools to organise people, tasks and deliverables.",
+        "services.projects.heading":"Project Management Tools",
+        "services.servicenow.lite.body":"Tell us what your SME needs and we’ll explore a right-sized solution.",
+        "services.servicenow.lite.title":"ServiceLite (ServiceNow for SMEs)",
+        "services.servicenow.managed.body":"Support, development and continuous improvement tailored to your organisation.",
+        "services.servicenow.managed.title":"ServiceNow Managed Services",
+        "services.servicenow.applications.body":"Apps and components that extend what your instance can do.",
+        "services.servicenow.applications.title":"ServiceNow Applications",
+        "services.servicenow.intro":"Specialist applications and services to get more value from ServiceNow.",
+        "services.servicenow.heading":"ServiceNow",
+        "services.cta.open":"Open tool",
+        "services.cta.request":"Request information",
+        "services.cta.explore":"Explore services",
+        "services.cta.soon":"Coming soon",
+        "services.badge.soon":"Coming soon",
+        "services.intro":"From ServiceNow to productivity tools and web services. Choose the right solution for your project.",
+        "services.eyebrow":"WHAT WE DO",
         "cases.title":"Experience",
         "cases.body":"We have worked with organizations in banking, real estate, legal, energy, pharmaceutical, aerospace and public administration sectors. References available under NDA.",
         "contact.title":"Let's talk",
