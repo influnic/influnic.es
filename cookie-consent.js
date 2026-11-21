@@ -204,6 +204,16 @@
       if(e.key==='Escape'&&!panel.hidden && current){panel.hidden=true;updateTrigger();}
     });
     new MutationObserver(updateText).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+    // Keep consent and optional resources in sync when preferences change in another tab.
+    window.addEventListener('storage',event=>{
+      if(event.key!==KEY)return;
+      const previous=current;
+      current=readSaved();
+      updateTrigger();
+      syncResources(previous);
+      if(current)panel.hidden=true;
+      else open(false);
+    });
     updateText();
     if(current)syncResources(null);
     else open(false);
