@@ -10,6 +10,10 @@ const assert = require('node:assert/strict');
   page.on('dialog', d => d.accept());
   try {
     await page.goto(process.env.GANTT_URL || 'http://127.0.0.1:8765/gantt.html');
+    const banner=page.locator('#influnic-consent-panel');
+    await banner.waitFor({state:'visible'});
+    await page.locator('[data-consent-action="reject"]').click();
+    assert.equal(await banner.isVisible(),false);
     await page.locator('#sample').click();
     assert.equal(await page.locator('.taskrow').count(), 6);
     // Expanded details must remain within the sticky task/responsible column.
